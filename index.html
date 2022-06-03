@@ -1,0 +1,209 @@
+<html lang="en">
+<head>
+  <title>Ecological Conservation Red Line</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style type="text/css">
+    body {
+       margin: 0;
+       padding: 0;
+    }
+    html, body, #map{
+       width: 100%;
+       height: 100%;
+    }
+    </style>
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/leaflet.css">
+  <!--鹰眼控件样式-->
+  <link href="css/Control.MiniMap.css" rel="stylesheet" />
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"></script>
+  <script src="js/jquery.min.js"></script>
+  <script src='js/mapbox.js'></script>
+  <script src="js/easy-button.js"></script>
+  <script src="js/leaflet.ajax.min.js"></script>
+  <script src="js/styles.js"></script>
+  <!--leaflet原生库+Zondy库-->
+  <script src="js/webclient-leaflet-framework.min.js"></script>
+  <!--鹰眼控件扩展库-->
+  <script src="js/Control.MiniMap.js"></script>
+
+</head>
+<body>
+    <div class="mapper no-padding">
+      <div id="map" class="map">
+      	<div id="download_icon"><a href="#" onClick="alert('Dear visitor,' + '\n' +
+							   '\n' + 'Thank you for your interest in this dataset!' + '\n' +
+							   '\n' + 'It will be available upon acceptance of our manuscript! For further information, please contact us (mengmeng.li@zju.edu.cn).' + '\n' +
+                                                                                                                   '\n' + 'Department of Land Management, Zhejiang University' +
+							   '\n' + 'Institute for Environmental Studies, VU University Amsterdam')";><img src="img/download_icon.png"></a></div>
+
+	<div id="homepage"><a href="#"><img src="img/homepage.png"></a></div>
+
+	<div id="revolvermaps"><img src="https://rf.revolvermaps.com/w/3/s/a/0/33/0/ffffff/010020/aa0000/5u0yvc9fwb5.png"></div>
+
+	    <div class="btn-group" style="z-index: 1001"> <!-- Use 401 to be between map and controls -->
+		</div>
+	  </div>
+      	<div id="logo"><img src="img/logo.png"></div>
+    </div>
+
+<script>
+function zoomTo(arg) {
+	if(arg == 'ex1') {
+		map.setView([30.289727, 120.144952], 10)
+	}
+	if(arg == 'ex2') {
+		map.setView([30.756209, 120.750882], 12)
+	}
+	if(arg == 'ex3') {
+		map.setView([29.548486, 120.829435], 11)
+	}
+	if(arg == 'ex4') {
+		map.setView([28.894809, 120.032905], 11)
+	}
+	if(arg == 'ex5') {
+		map.setView([28.599213, 121.199404], 11)
+	}
+	if(arg == 'ex6') {
+		map.setView([28.135415, 119.514941], 11)
+	}
+}
+</script>
+
+<div class='map-overlay-left' id="exmpl">
+        <div class='map-overlay-inner'>
+            <div><u>Zoom to examples:</u></br>
+				<img src="img/ex1.png" onClick="zoomTo('ex1')"><br>
+				<img src="img/ex2.png" onClick="zoomTo('ex2')"><br>		
+				<img src="img/ex3.png" onClick="zoomTo('ex3')"><br>
+				<img src="img/ex4.png" onClick="zoomTo('ex4')"><br>
+				<img src="img/ex5.png" onClick="zoomTo('ex5')"><br>
+				<img src="img/ex6.png" onClick="zoomTo('ex6')"><br>
+            </div>
+        </div>
+    </div>
+	<div id="showExamples">
+        Examples
+    </div>
+
+    <div id="legend"></div>
+    <div id="showLegend">
+        Legend
+    </div>
+
+<script>
+        var dark_basemap= L.tileLayer('https://tile.jawg.io/jawg-dark/{z}/{x}/{y}.png?access-token=husKPovN2ju7MHnvcylZj55yt4MlLylmlIqugjh6M4i46rQzm9aJpLjxlnIvSadp', {
+	    	minZoom: 3,
+            		maxZoom: 14,
+            		tms: false,
+          		attribution: 'OpenStreetMap'
+			});
+
+	var bright_basemap = L.tileLayer('https://tile.jawg.io/jawg-light/{z}/{x}/{y}.png?access-token=husKPovN2ju7MHnvcylZj55yt4MlLylmlIqugjh6M4i46rQzm9aJpLjxlnIvSadp', {
+		minZoom: 3,
+          		maxZoom: 14,
+          		tms: false,
+          		attribution: 'OpenStreetMap'
+			});
+        var my_admin = L.tileLayer('map/admin/{z}/{x}/{y}.png', {
+          		minZoom: 3,
+          		maxZoom: 14,
+          		tms: false,
+          		attribution: '@Mengmeng Li'
+        		});
+
+        var my_redline = L.tileLayer('map/redline/{z}/{x}/{y}.png', {
+          		minZoom: 3,
+          		maxZoom: 14,
+          		tms: false,
+          		attribution: '@Mengmeng Li'
+        		});
+        var my_stone = L.tileLayer('map/stone/{z}/{x}/{y}.png', {
+          		minZoom: 3,
+          		maxZoom: 14,
+          		tms: false,
+          		attribution: '@Mengmeng Li'
+        		});
+
+        var my_corridor = L.tileLayer('map/corridor/{z}/{x}/{y}.png', {
+          		minZoom: 3,
+          		maxZoom: 14,
+          		tms: false,
+          		attribution: '@Mengmeng Li'
+        		});
+        var height_cv = L.tileLayer('height_cv/{z}/{x}/{y}.png', {
+          		minZoom: 3,
+          		maxZoom: 14,
+          		tms: false,
+          		attribution: '@Mengmeng Li'
+        		});
+
+        var volume = L.tileLayer('volume_mean/{z}/{x}/{y}.png', {
+          		minZoom: 3,
+          		maxZoom: 14,
+          		tms: false,
+          		attribution: '@Mengmeng Li'
+        		});
+
+	var map = L.map('map', {
+			center: [29, 120],
+			zoom: 7,
+			layers: [dark_basemap, my_redline, my_corridor, my_stone, my_admin]
+	});
+
+	var base_Layers = {
+			"Dark basemap": dark_basemap,
+			"Bright basemap": bright_basemap
+	};
+
+	var GMUS_Layers = {
+			"ECRL": my_redline,
+			"Ecological corridor":my_corridor,
+			"Stepping stone ": my_stone,
+		    	"Admin division": my_admin
+	};
+	
+
+	L.control.layers(base_Layers, GMUS_Layers, {
+			collapsed: false,
+			position: 'bottomright'}).addTo(map);
+
+
+       //Add eagle eye
+	var OSM_Map = new L.TileLayer('https://a.tile.openstreetmap.de/{z}/{x}/{y}.png', {
+                minZoom: 0,
+                maxZoom: 6,
+            });
+
+        var miniMap = new L.Control.MiniMap(OSM_Map, {
+                //Display eagle eye or not
+                toggleDisplay: true,
+		position: 'bottomleft'
+            }).addTo(map);
+
+ 	var img = document.createElement("img");
+	img.src = "img/legend.png";
+	var src = document.getElementById("x");
+	legend.appendChild(img);
+
+	var closeButton = document.createElement('div');
+	closeButton.className = 'cB';
+	legend.appendChild(closeButton);
+	closeButton.onclick = function() {
+	document.getElementById("legend").style.visibility = 'hidden';
+	document.getElementById("showLegend").style.visibility = 'visible';
+ 	}
+
+	document.getElementById("showLegend").onclick = function() {
+	document.getElementById("legend").style.visibility = 'visible';
+	document.getElementById("showLegend").style.visibility = 'hidden';
+	}
+  </script>
+</body>
+</html>
