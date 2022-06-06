@@ -105,7 +105,7 @@ function zoomTo(arg) {
           		attribution: 'OpenStreetMap'
 			});
 
-	var bright_basemap = L.tileLayer('https://tile.jawg.io/jawg-light/{z}/{x}/{y}.png?access-token=husKPovN2ju7MHnvcylZj55yt4MlLylmlIqugjh6M4i46rQzm9aJpLjxlnIvSadp', {
+       var bright_basemap = L.tileLayer('https://tile.jawg.io/jawg-light/{z}/{x}/{y}.png?access-token=husKPovN2ju7MHnvcylZj55yt4MlLylmlIqugjh6M4i46rQzm9aJpLjxlnIvSadp', {
 		minZoom: 3,
           		maxZoom: 14,
           		tms: false,
@@ -137,22 +137,32 @@ function zoomTo(arg) {
           		tms: false,
           		attribution: '@Mengmeng Li'
         		});
-        var height_cv = L.tileLayer('height_cv/{z}/{x}/{y}.png', {
+        var my_PAs = L.tileLayer('map/PAs/{z}/{x}/{y}.png', {
           		minZoom: 3,
           		maxZoom: 14,
           		tms: false,
           		attribution: '@Mengmeng Li'
         		});
-
-        var volume = L.tileLayer('volume_mean/{z}/{x}/{y}.png', {
+        var my_LUCC = L.tileLayer('map/LUCC/{z}/{x}/{y}.png', {
           		minZoom: 3,
           		maxZoom: 14,
           		tms: false,
           		attribution: '@Mengmeng Li'
         		});
-
+        var my_EFZ = L.tileLayer('map/EFZ/{z}/{x}/{y}.png', {
+          		minZoom: 3,
+          		maxZoom: 14,
+          		tms: false,
+          		attribution: '@Mengmeng Li'
+        		});
+        var my_priority = L.tileLayer('map/priority/{z}/{x}/{y}.png', {
+          		minZoom: 3,
+          		maxZoom: 14,
+          		tms: false,
+          		attribution: '@Mengmeng Li'
+        		});
 	var map = L.map('map', {
-			center: [29, 120],
+			center: [29.2, 120],
 			zoom: 8,
 			layers: [dark_basemap, my_redline, my_corridor, my_stone, my_admin]
 	});
@@ -164,9 +174,13 @@ function zoomTo(arg) {
 
 	var GMUS_Layers = {
 			"ECR": my_redline,
-			"Ecological corridor":my_corridor,
-			"Stepping stone ": my_stone,
-		    	"Admin division": my_admin
+			"Protected Areas": my_PAs,
+			"Ecological Corridor":my_corridor,
+			"EFZ": my_EFZ,
+			"Priority Areas": my_priority,
+			"Stepping Stone": my_stone,
+			"LUCC": my_LUCC,
+		    	"Admin Division": my_admin
 	};
 	
 
